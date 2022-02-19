@@ -57,3 +57,33 @@ const quotes = [
 		author: "햄릿 中",
 	},
 ];
+
+window.addEventListener("load", function (event) {
+	// 랜덤 배경 가져오기
+	const image = images[getRandomArrayKey(images)];
+	document.body.style.backgroundImage = `url('./img/${image}')`;
+	document.body.style.backgroundRepeat = "no-repeat";
+	document.body.style.backgroundSize = "cover";
+
+	// 랜덤 명언 가져오기
+	const quoteItem = quotes[getRandomArrayKey(quotes)];
+	const wiseSayingQuote = document.querySelector(".wise-saying .quote");
+	const wiseSayingAuthor = document.querySelector(".wise-saying .author");
+
+	wiseSayingQuote.innerText = quoteItem.quote;
+	wiseSayingAuthor.innerText = `- ${quoteItem.author}`;
+});
+
+/**
+ * * 구글 검색
+ *
+ * Todo 새 창으로 열고 있지만 기본 창에서 움직여도 괜찮을지 생각해 보기
+ */
+ const googleSearch = document.querySelector(".js-search");
+ googleSearch.addEventListener("keydown", function (e) {
+	 if (e.key === "Enter") {
+		 const keyword = googleSearch.value;
+ 
+		 window.open(`https://www.google.com/search?q=${keyword}`, "searchTab");
+	 }
+ });
