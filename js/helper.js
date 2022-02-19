@@ -28,13 +28,13 @@ function getTwoCharacterZeroPadded(item, maxLength = 2, fillString = "0") {
  */
 function getGreeting(hour) {
 	if (hour >= 6 && hour < 12) {
-		return "Good morning! ";
+		return "Have a nice day! ❤ ";
 	} else if (hour >= 12 && hour < 17) {
-		return "Good afternoon! ";
+		return "Good luck! 🎁 ";
 	} else if (hour >= 17 && hour < 21) {
-		return "Good evening! ";
+		return "Let's end the day well. 💯 ";
 	} else {
-		return "Good night! ";
+		return "Sweet dreams. 💤 ";
 	}
 }
 
@@ -132,6 +132,7 @@ function getYoil(lang = "en", key = 0) {
 	switch (lang) {
 		case "ko":
 			return yoil.Kor[key];
+		
 		default:
 			return yoil.Eng[key];
 	}

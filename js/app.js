@@ -1,5 +1,10 @@
+/**
+ * * username 이 중복으로 사용되므로 변수화
+ */
+const USERNAME = "username";
+
 // 로컬스토리지에 저장되어 있던 사용자 이름
-const savedUsername = localStorage.getItem("username");
+const savedUsername = localStorage.getItem(USERNAME);
 
 /**
  * * 사용자 이름 받기
@@ -19,9 +24,14 @@ if (!savedUsername) {
 		if (e.key === "Enter") {
 			const username = userIdInput.value;
 
-			processLogin(username);
+			// username이 공백일 경우 처리
+			if (username.trim() === "") {
+				userIdInput.focus();
+			} else {
+				processLogin(username);
 
-			localStorage.setItem("username", username);
+				localStorage.setItem(USERNAME, username);
+			}
 		}
 	});
 } else {
@@ -49,8 +59,6 @@ window.addEventListener("load", function (event) {
 	// 랜덤 배경 가져오기
 	const image = getImage();
 	document.body.style.backgroundImage = `url('./img/${image}')`;
-	document.body.style.backgroundRepeat = "no-repeat";
-	document.body.style.backgroundSize = "cover";
 
 	// 랜덤 명언 가져오기
 	const quoteItem = getQuote();
