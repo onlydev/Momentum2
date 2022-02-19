@@ -124,10 +124,10 @@ function getImage() {
  * @returns
  */
 function getYoil(lang = "en", key = 0) {
-    const yoil = {
-        Eng: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        Kor: ["일", "월", "화", "수", "목", "금", "토"]
-    };
+	const yoil = {
+		Eng: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+		Kor: ["일", "월", "화", "수", "목", "금", "토"],
+	};
 
 	switch (lang) {
 		case "ko":
@@ -135,4 +135,36 @@ function getYoil(lang = "en", key = 0) {
 		default:
 			return yoil.Eng[key];
 	}
+}
+
+/**
+ * * 실시간 날짜 및 시계
+ */
+function getRealTime() {
+	const today = new Date();
+
+	// 오늘 날짜 가져오기
+	const [year, month, day, yoil] = [
+		today.getFullYear(),
+		getTwoCharacterZeroPadded(today.getMonth() + 1),
+		getTwoCharacterZeroPadded(today.getDate()),
+		getYoil("en", today.getDay()),
+	];
+
+	const todayDate = document.querySelector(".date");
+	todayDate.innerText = `${year}.${month}.${day} (${yoil})`;
+
+	// 현재 시간 가져오기
+	const hour = getTwoCharacterZeroPadded(today.getHours());
+	const minute = getTwoCharacterZeroPadded(today.getMinutes());
+	const second = getTwoCharacterZeroPadded(today.getSeconds());
+
+	const realTime = document.querySelector(".clock");
+	realTime.innerText = `${hour}:${minute}:${second}`;
+
+	// 인사하기
+	const greeting = getGreeting(hour);
+
+	const viewGreeting = document.querySelector(".greeting");
+	viewGreeting.innerText = greeting;
 }

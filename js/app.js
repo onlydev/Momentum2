@@ -1,20 +1,32 @@
-window.addEventListener("load", function (event) {
-	// 랜덤 배경 가져오기
-	const image = getImage();
-	document.body.style.backgroundImage = `url('./img/${image}')`;
-	document.body.style.backgroundRepeat = "no-repeat";
-	document.body.style.backgroundSize = "cover";
+// 로컬스토리지에 저장되어 있던 사용자 이름
+const savedUsername = localStorage.getItem("username");
 
-	// 랜덤 명언 가져오기
-	const quoteItem = getQuote();
-	const wiseSayingQuote = document.querySelector(".wise-saying .quote");
-	const wiseSayingAuthor = document.querySelector(".wise-saying .author");
+/**
+ * * 사용자 이름 받기
+ */
+function processLogin(id) {
+	if (id.trim() !== "") {
+		userIdInput.classList.add("hidden");
+		viewUsername.innerText = id;
+		viewUsername.classList.remove("hidden");
+	}
+}
 
-	wiseSayingQuote.innerText = `"${quoteItem.quote}"`;
-	wiseSayingAuthor.innerText = `- ${quoteItem.author}`;
+const viewUsername = document.querySelector(".username");
+const userIdInput = document.querySelector(".js-login");
+if (!savedUsername) {
+	userIdInput.addEventListener("keydown", function (e) {
+		if (e.key === "Enter") {
+			const username = userIdInput.value;
 
-	setInterval(getRealTime, 1000);
-});
+			processLogin(username);
+
+			localStorage.setItem("username", username);
+		}
+	});
+} else {
+	processLogin(savedUsername);
+}
 
 /**
  * * 구글 검색
@@ -30,32 +42,23 @@ googleSearch.addEventListener("keydown", function (e) {
 	}
 });
 
-// 실시간 시계
-function getRealTime() {
-	const today = new Date();
+/**
+ * * 윈도우가 로드된 후 실행
+ */
+window.addEventListener("load", function (event) {
+	// 랜덤 배경 가져오기
+	const image = getImage();
+	document.body.style.backgroundImage = `url('./img/${image}')`;
+	document.body.style.backgroundRepeat = "no-repeat";
+	document.body.style.backgroundSize = "cover";
 
-	// 오늘 날짜 가져오기
-	const [year, month, day, yoil] = [
-		today.getFullYear(),
-		getTwoCharacterZeroPadded(today.getMonth() + 1),
-		getTwoCharacterZeroPadded(today.getDate()),
-		getYoil("en", today.getDay()),
-	];
+	// 랜덤 명언 가져오기
+	const quoteItem = getQuote();
+	const viewQuote = document.querySelector(".wise-saying .quote");
+	const viewAuthor = document.querySelector(".wise-saying .author");
 
-	const todayDate = document.querySelector(".date");
-	todayDate.innerText = `${year}.${month}.${day} (${yoil})`;
+	viewQuote.innerText = `"${quoteItem.quote}"`;
+	viewAuthor.innerText = `- ${quoteItem.author}`;
 
-	// 현재 시간 가져오기
-	const hour = getTwoCharacterZeroPadded(today.getHours());
-	const minute = getTwoCharacterZeroPadded(today.getMinutes());
-	const second = getTwoCharacterZeroPadded(today.getSeconds());
-
-	const realTime = document.querySelector(".clock");
-	realTime.innerText = `${hour}:${minute}:${second}`;
-
-	// 인사하기
-	const greeting = getGreeting(hour);
-
-	const viewGreeting = document.querySelector(".greeting");
-	viewGreeting.innerText = greeting;
-}
+	setInterval(getRealTime, 1000);
+});
