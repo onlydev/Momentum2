@@ -132,7 +132,7 @@ function getYoil(lang = "en", key = 0) {
 	switch (lang) {
 		case "ko":
 			return yoil.Kor[key];
-		
+
 		default:
 			return yoil.Eng[key];
 	}
@@ -168,4 +168,28 @@ function getRealTime() {
 
 	const viewGreeting = document.querySelector(".greeting");
 	viewGreeting.innerText = greeting;
+}
+
+function getWeatherApi(lat, lon) {
+	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=19f5b7984a8e6d80d87ddc259a59995f&lang=kr&units=metric`;
+
+	fetch(url)
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data);
+			const city = data.name; // 도시 이름
+			const temp = data.main.temp; // 현재 기온
+			const feels_like = data.main.feels_like; // 체감온도
+
+			const viewWeather = document.querySelector(".view-weather");
+
+			const viewTemp1 = viewWeather.querySelector(".weather-temp1");
+			const viewTemp2 = viewWeather.querySelector(".weather-temp2");
+
+			viewTemp1.innerText = `${city} ${temp}℃ `;
+			viewTemp2.innerText = `(wind chill ${feels_like}℃)`;
+
+			viewWeather.classList.remove("hidden");
+		})
+		.catch((e) => console.error(e));
 }

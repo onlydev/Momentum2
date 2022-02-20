@@ -40,10 +40,16 @@ input:focus {
 .top-left {
 	--max-height: 60px;
 	--side-padding: 8px;
+	max-width: 20%;
 	height: 60px;
 	align-items: stretch;
 	flex-grow: 0;
 	flex-shrink: 100000000;
+}
+
+.top-center {
+	justify-content: center;
+	flex-grow: 0;
 }
 
 .search-area {
@@ -64,13 +70,9 @@ input:focus {
 	border-radius: 3px;
 }
 
-.top-center {
-	justify-content: center;
-	flex-grow: 0;
-}
-
 .top-right {
 	min-height: 60px;
+	max-width: 20%;
 	min-width: 0px;
 	flex-direction: row-reverse;
 	justify-content: flex-start;
@@ -158,6 +160,7 @@ input:focus {
 }
 
 .content-right {
+	padding-top: 20px;
 	width: 20%;
 	text-align: center;
 	justify-content: center;
@@ -239,4 +242,26 @@ a:hover,
 a:link {
 	color: beige;
 	text-decoration: none;
+}
+
+.todos {
+	padding-top: 150px;
+}
+
+.todos p {
+	padding-bottom: 20px;
+}
+
+.js-todo {
+	border: none;
+	border-bottom: 2px solid #2c2c2c;
+	margin-bottom: 10px;
+	opacity: 0.4;
+	width: 400px;
+	height: 50px;
+	font-size: larger;
+	font-weight: bold;
+	color: #2c2c2c;
+	border-radius: 3px;
+	vertical-align: middle;
 }

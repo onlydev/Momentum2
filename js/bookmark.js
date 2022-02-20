@@ -1,27 +1,33 @@
-let bookmark = [];
-savedBookmark = JSON.parse(localStorage.getItem("bookmark"));
+const BOOKMARKS = "bookmarks";
 
-if (savedBookmark) {
-	bookmark = savedBookmark;
-	savedBookmark = null;
-	paintBookmark(bookmark);
+let bookmarks = [];
+let savedBookmarks = JSON.parse(localStorage.getItem(BOOKMARKS));
+
+if (savedBookmarks) {
+	bookmarks = savedBookmarks;
+	savedBookmarks = null;
+
+	paintBookmarks();
 }
 
-function paintBookmark(items) {
+function saveBookmark() {
+	localStorage.setItem(BOOKMARKS, JSON.stringify(bookmarks));
+}
+
+function paintBookmarks() {
 	const ulTag = document.createElement("ul");
 
-	for (const item of items) {
+	for (const bookmark of bookmarks) {
 		const liTag = document.createElement("li");
 		const spanTag = document.createElement("span");
 		const aTag = document.createElement("a");
 
-		const titleText = document.createTextNode(item.name);
+		const titleText = document.createTextNode(bookmark.name);
 
 		aTag.appendChild(titleText);
 
-		aTag.setAttribute("href", item.url);
+		aTag.setAttribute("href", bookmark.url);
 		aTag.setAttribute("target", "_blank");
-		// aTag.title = item.name;
 
 		spanTag.appendChild(aTag);
 
@@ -37,14 +43,16 @@ function paintBookmark(items) {
 		buttonTag.addEventListener("click", function (e) {
 			e.target.parentElement.parentElement.remove();
 
-      bookmark = bookmark.filter((f) => item.id !== f.id);
-      
-			localStorage.setItem("bookmark", JSON.stringify(bookmark));
+			bookmarks = bookmarks.filter((f) => item.id !== f.id);
+
+			saveBookmark();
 		});
 	}
 
-	document.querySelector(".view-bookmark").innerHTML = "";
-	document.querySelector(".view-bookmark").appendChild(ulTag);
+	const viewBookmark = document.querySelector(".view-bookmark");
+
+	viewBookmark.innerHTML = "";
+	viewBookmark.appendChild(ulTag);
 }
 
 const siteName = document.querySelector(".bookmark .js-bookmark-name");
@@ -61,15 +69,15 @@ siteUrl.addEventListener("keydown", function (e) {
 				url: siteUrl.value,
 			};
 
-			bookmark.push(item);
+			bookmarks.push(item);
 
-			localStorage.setItem("bookmark", JSON.stringify(bookmark));
+			saveBookmark();
 
 			siteName.value = "";
 			siteUrl.value = "";
 			siteName.focus();
 
-			paintBookmark(bookmark);
+			paintBookmarks();
 		}
 	}
 });
