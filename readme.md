@@ -8,3 +8,7 @@
   - localStorage
   - fetch
   - [Weather API](https://openweathermap.org/) - JSON
+
+## 이미지 저작권
+이미지는 웹 상에서 무료로 제공하는 이미지를 사용했지만, 혹시라도 저작권에 침해가 되는 이미지가 있다면 연락주십시오.
+즉시 삭제하도록 하겠습니다.
